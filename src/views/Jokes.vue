@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="search">
       <input type="text" placeholder="Search" v-model="search" />
+      {{ link }}
     </div>
     <div class="about">
       <!-- <Loader/> -->
       <ul v-if="!loading">
-        <Joke v-for="joke in jokesByTitle" v-bind:joke="joke" :key="joke.id" />
+        <Joke v-for="joke in jokesByTitle" v-bind:joke="joke" :key="joke.id" v-bind:likedJokes="likedJokes" />
       </ul>
-      <Loader v-else/>
+      <Loader v-else />
     </div>
   </div>
 </template>
@@ -20,13 +21,14 @@ import Loader from '@/components/Loader';
 export default {
   components: {
     Joke,
-     Loader,
+    Loader,
   },
   data() {
     return {
       search: '',
       jokes: [],
-      loading: true
+      loading: true,
+      likedJokes:[]
     };
   },
   computed: {
@@ -35,24 +37,32 @@ export default {
     },
   },
   beforeMount() {
-    fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
+   
+    fetch(
+      `https://v2.jokeapi.dev/joke/${this.$route.params.category}?type=single&amount=10`
+    )
       .then((response) => response.json())
       .then((json) => {
+        if (json.error) return alert('error');
         this.jokes.push(...json.jokes);
-        this.loading = false
+        this.loading = false;
       });
   },
 };
 </script>
 
 <style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
 .about {
   width: 700px;
   height: 80vh;
   min-height: 20vh;
   border: 1px solid black;
   padding: 10px;
-  margin-bottom: 10px;
+
   overflow-y: scroll;
 }
 

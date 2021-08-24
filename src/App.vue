@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/jokes">Jokes</router-link>
+      <router-link to="/">Home</router-link> 
+      <!-- <router-link to="/jokes" v-bind:link="link">Jokes</router-link> -->
     </div>
     <router-view />
   </div>
@@ -22,7 +22,7 @@ body {
   text-align: center;
   color: #2c3e50;
   margin: 0;
-  min-height: 100vh;
+  height: 100vh;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -30,6 +30,8 @@ body {
   background-color: #ffcfdf;
   background-image: linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);
   align-items: center;
+  overflow: hidden;
+  padding: 10px;
 }
 
 #nav {
@@ -50,11 +52,11 @@ body {
 
 <script>
 export default {
-  // data() {
-  //   return {
-  //     jokes: [],
-  //   };
-  // },
+  data() {
+    return {
+      link: 'asad',
+    };
+  },
   // mounted() {
   //   fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
   //     .then((response) => response.json())
