@@ -7,7 +7,12 @@
     <div class="about">
       <!-- <Loader/> -->
       <ul v-if="!loading">
-        <Joke v-for="joke in jokesByTitle" v-bind:joke="joke" :key="joke.id" v-bind:likedJokes="likedJokes" />
+        <Joke
+          v-for="joke in jokesByTitle"
+          v-bind:joke="joke"
+          :key="joke.id"
+          v-bind:likedJokes="likedJokes"
+        />
       </ul>
       <Loader v-else />
     </div>
@@ -28,7 +33,7 @@ export default {
       search: '',
       jokes: [],
       loading: true,
-      likedJokes:[]
+      likedJokes: [],
     };
   },
   computed: {
@@ -37,7 +42,6 @@ export default {
     },
   },
   beforeMount() {
-   
     fetch(
       `https://v2.jokeapi.dev/joke/${this.$route.params.category}?type=single&amount=10`
     )
@@ -55,14 +59,16 @@ export default {
 .wrapper {
   display: flex;
   flex-direction: column;
+  min-width: 200px;
 }
 .about {
-  width: 700px;
+  max-width: 700px;
+  width: 60vw;
   height: 80vh;
   min-height: 20vh;
   border: 1px solid black;
   padding: 10px;
-
+  min-width: 200px;
   overflow-y: scroll;
 }
 
@@ -85,11 +91,13 @@ export default {
 
 .search {
   margin-bottom: 10px;
+  min-width: 200px;
 }
 
 input {
   background: none;
-  width: 400px;
+  /* max-width: 400px; */
+  min-width: 200px;
   height: 20px;
   outline: none;
   border: 1px solid black;
