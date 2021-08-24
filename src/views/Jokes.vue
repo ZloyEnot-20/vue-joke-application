@@ -1,13 +1,15 @@
 <template>
-  <div class="about">
+  <div>
     <div class="search">
-      <input type="text" placeholder="Search"  v-model="search" />
+      <input type="text" placeholder="Search" v-model="search" />
     </div>
-
-    <!-- <Loader/> -->
-    <ul>
-      <Joke v-for="joke in jokesByTitle" v-bind:joke="joke" :key="joke.id" />
-    </ul>
+    <div class="about">
+      <!-- <Loader/> -->
+      <ul v-if="!loading">
+        <Joke v-for="joke in jokesByTitle" v-bind:joke="joke" :key="joke.id" />
+      </ul>
+      <Loader v-else/>
+    </div>
   </div>
 </template>
 
@@ -18,25 +20,26 @@ import Loader from '@/components/Loader';
 export default {
   components: {
     Joke,
-    // Loader,
+     Loader,
   },
-   data() {
+  data() {
     return {
       search: '',
       jokes: [],
+      loading: true
     };
   },
   computed: {
     jokesByTitle() {
-      return this.jokes.filter(item => item.joke.indexOf(this.search) !== -1)
+      return this.jokes.filter((item) => item.joke.indexOf(this.search) !== -1);
     },
   },
   beforeMount() {
-       fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
+    fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
       .then((response) => response.json())
       .then((json) => {
         this.jokes.push(...json.jokes);
-       
+        this.loading = false
       });
   },
 };
@@ -45,16 +48,33 @@ export default {
 <style scoped>
 .about {
   width: 700px;
-  height: auto;
-  min-height: 90vh;
+  height: 80vh;
+  min-height: 20vh;
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 10px;
+  overflow-y: scroll;
+}
+
+.about::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+.about::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #2de2e2;
+}
+
+.about::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: transparent;
+  outline: none;
 }
 
 .search {
-  /* display: flex; */
-  /* align-items: flex-start; */
+  margin-bottom: 10px;
 }
 
 input {
