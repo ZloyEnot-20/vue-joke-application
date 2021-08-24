@@ -3,24 +3,32 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/jokes">Jokes</router-link>
-      
     </div>
-    <router-view v-bind:jokes="jokes" />
+    <router-view />
   </div>
 </template>
 
 <style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
+  box-sizing: border-box;
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
   text-align: center;
   color: #2c3e50;
   margin: 0;
+  min-height: 100vh;
   padding: 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: #ffcfdf;
+  background-image: linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);
   align-items: center;
 }
 
@@ -42,18 +50,18 @@
 
 <script>
 export default {
-  data() {
-    return {
-      jokes: [],
-    };
-  },
-  mounted() {
-    fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
-      .then((response) => response.json())
-      .then((json) => {
-        this.jokes.push(...json.jokes)
-        console.log(json);
-      });
-  },
+  // data() {
+  //   return {
+  //     jokes: [],
+  //   };
+  // },
+  // mounted() {
+  //   fetch('https://v2.jokeapi.dev/joke/Any?type=single&amount=10')
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       this.jokes.push(...json.jokes);
+  //       console.log(json);
+  //     });
+  // },
 };
 </script>
